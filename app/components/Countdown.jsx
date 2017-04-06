@@ -28,6 +28,20 @@ var Countdown = React.createClass({
       }
     }
   },
+  componentWillUpdate: function(nextProps, nextState){
+
+  },
+  componentWillMount: function(){
+    //console.log('will mount');
+  },
+  componentDidMount: function(){
+    //console.log('did mount');
+  },
+  componentWillUnmount: function(){
+    //console.log('will unmount');
+    clearInterval(this.timer);
+    this.timer = undefined;
+  },
   startTimer: function(){
     this.timer = setInterval(()=>{
       var newCount = this.state.count - 1;
@@ -35,6 +49,13 @@ var Countdown = React.createClass({
       this.setState({
         count: newCount > 0 ? newCount : 0
       });
+
+      if(newCount ===0){
+        this.setState({
+          countdownStatus: 'stopped'
+        });
+      }
+
     }, 1000);
   },
   handleSetCountdown: function(seconds){
@@ -62,6 +83,7 @@ var Countdown = React.createClass({
 
     return (
       <div>
+        <h1 className="page-title">Countdown App</h1>
         <Clock totalSeconds = {count}/>
         {renderControlArea()}
       </div>
